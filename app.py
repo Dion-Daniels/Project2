@@ -77,6 +77,12 @@ def team_raw_data():
     df2 = pd.read_sql_query(stmt, session.bind).dropna()
     
     return jsonify(df2.to_dict())
+@app.route('/api/v1.0/test')
+def test():
+    stmt = session.query(main.game_id).statement
+    df2 = pd.read_sql_query(stmt, session.bind).dropna()
+    
+    return jsonify(df2.to_dict())
 
 if __name__ == "__main__":
     app.run(debug=True)
