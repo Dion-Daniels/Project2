@@ -1,17 +1,4 @@
-var request = new XMLHttpRequest()
+d3.json(url).then(data)
 
-request.open('GET', 'INSERT API LINK HTML HERE', true)
-request.onload = function () {
-  // Begin accessing JSON data here
-  var data = JSON.parse(this.response)
+url = "https://project2-cheng-musah-dion.herokuapp.com/api/v1.0/raw_main"
 
-  if (request.status >= 200 && request.status < 400) {
-    data.forEach(player) => {
-      console.log(games_by_players.player_tag)
-    })
-  } else {
-    console.log('error')
-  }
-}
-
-request.send()
