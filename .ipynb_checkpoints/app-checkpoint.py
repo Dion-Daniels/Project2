@@ -87,18 +87,6 @@ def test():
     df2 = pd.read_sql_query(stmt, session.bind).dropna()
     
     return jsonify(df2.to_dict())
-    
-@app.route('/api/v1.0/IDs')
-def id():
-    stmt = session.query(players.team_region, players.player_tag, players.player_id).statement
-    df2 = pd.read_sql_query(stmt, session.bind).dropna()
-    names = df2.drop_duplicates(subset=['player_tag', 'player_id'])
-    regions = df2.drop_duplicates(subset='team_region')
-    thisdict =	{
-        "region": regions['team_region'].tolist(),
-        "player_tag": names['player_tag'].tolist(),
-        "player_id": names['player_id'].tolist()
-    }
-    return jsonify(thisdict)
+
 if __name__ == "__main__":
     app.run(debug=True)
