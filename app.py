@@ -55,10 +55,13 @@ def home():
     print("Server received request for 'Home' page...")
     return(f"<h1>Project 2 - Rocket League</h1><hr>"
           "<p>by Cheng, Musah, and Dion</p>"
-           "<hr><strong>Do not use for data exploration! Due to size of datasets load times are slow 30s + </strong>"
+          "<hr><strong>Do not use for data exploration! Due to size of datasets load times are slow 30s + </strong>"
           "<p>/api/v1.0/raw_main</p>"
           "<p>/api/v1.0/raw_players</p>"
-          "<p>/api/v1.0/raw_teams</p>") 
+          "<p>/api/v1.0/raw_teams</p>"
+          "<p>/api/v1.0/IDs</p>"
+          "<p>/api/v1.0/<region>/<player_id></p>"
+          "<p>/api/v1.0/<region></p>") 
 
 # page for last 12 months of percipitation data
 @app.route('/api/v1.0/raw_main')
@@ -100,5 +103,22 @@ def id():
         "player_id": names['player_id'].tolist()
     }
     return jsonify(thisdict)
+
+@app.route('/api/v1.0/<region>/<player_id>')
+def player_select(region,player_id):
+    
+    stmt = session.query(players).\
+            filter((players.team_region ==region)&(players.player_id ==player_id)).statement
+    df3 = pd.read_sql_query(stmt, session.bind).dropna()
+    return jsonify(df3.to_dict())
+
+@app.route('/api/v1.0/<region>')
+def region_select(region):
+    
+    stmt = session.query(players).\
+            filter((players.team_region ==region)).statement
+    df3 = pd.read_sql_query(stmt, session.bind).dropna()
+    return jsonify(df3.to_dict())
+
 if __name__ == "__main__":
     app.run(debug=True)
