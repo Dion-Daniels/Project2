@@ -60,8 +60,9 @@ def home():
           "<p>/api/v1.0/raw_players</p>"
           "<p>/api/v1.0/raw_teams</p>"
           "<p>/api/v1.0/IDs</p>"
-          "<p>/api/v1.0/<region>/<player_id></p>"
-          "<p>/api/v1.0/<region></p>") 
+          "<p>/api/v1.0/region/player_id</p>"
+          "<p>/api/v1.0/region/player_tag</p>"          
+          "<p>/api/v1.0/region</p>") 
 
 # page for last 12 months of percipitation data
 @app.route('/api/v1.0/raw_main')
@@ -160,6 +161,38 @@ def region_select(region):
         }
    
     return jsonify(region_dict)
+
+@app.route('/api/v1.0/<region>/<player_tag>')
+def player_select_tag(region,player_tag):
+    
+    stmt = session.query(players).\
+            filter((players.team_region ==region)&(players.player_id ==player_tag)).statement
+    df3 = pd.read_sql_query(stmt, session.bind).dropna()
+    thisdict ={
+        "player_id": df3["player_id"].drop_duplicates()[0],
+        "player_tag": df3["player_tag"].drop_duplicates()[0],
+        "region": df3["team_region"].drop_duplicates()[0],
+        "color": df3["color"].tolist(),
+        "wins_loses":  df3["winner"].tolist(),
+        "games": float(df3["winner"].count()),
+        "wins":  float(df3["winner"][df3["winner"]=="True"].count()),
+        "loses": float(df3["winner"][df3["winner"]=="False"].count()),
+        "Win_percent": round(df3["winner"][df3["winner"]=="True"].count()/ df3["winner"].count()*100,2),
+        "lose_percent": round(df3["winner"][df3["winner"]=="False"].count()/ df3["winner"].count()*100,2),
+        "avg_score": round(df3["core_score"].mean(),2),
+        "score": df3["core_score"].tolist(),
+        "avg_assists": round(df3["core_assists"].mean(),2),
+        "assists": df3["core_assists"].tolist(),
+        "avg_goals": round(df3["core_goals"].mean(),2),
+        "goals": df3["core_goals"].tolist(),
+        "avg_saves": round(df3["core_saves"].mean(),2),
+        "saves": df3["core_saves"].tolist(),
+        "avg_shoot_percentage": round(df3["core_shooting_percentage"].mean(),2),
+        "shoot_percentage": df3["core_shooting_percentage"].tolist(),
+        "avg_shots": round(df3["core_shots"].mean(),2),
+        "shots": df3["core_shots"].tolist(),
+    }
+    return jsonify(thisdict)
 
 if __name__ == "__main__":
     app.run(debug=True)
