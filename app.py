@@ -141,8 +141,25 @@ def region_select(region):
     
     stmt = session.query(players).\
             filter((players.team_region ==region)).statement
-    df3 = pd.read_sql_query(stmt, session.bind).dropna()
-    return jsonify(df3.to_dict())
+    region_df = pd.read_sql_query(stmt, session.bind).dropna()
+    region_dict ={
+        "player_id": region_df["player_id"].drop_duplicates().tolist(),
+        "player_tag": region_df["player_tag"].drop_duplicates().tolist(),
+        "region": region_df["team_region"].drop_duplicates()[0],
+        "games": float(region_df["winner"].count()),
+        "wins":  float(region_df["winner"][region_df["winner"]=="True"].count()),
+        "loses": float(region_df["winner"][region_df["winner"]=="False"].count()),
+        "Win_percent": round(region_df["winner"][region_df["winner"]=="True"].count()/ region_df["winner"].count()*100,2),
+        "lose_percent": round(region_df["winner"][region_df["winner"]=="False"].count()/ region_df["winner"].count()*100,2),
+        "avg_score": round(region_df["core_score"].mean(),2),
+        "avg_assists": round(region_df["core_assists"].mean(),2),
+        "avg_goals": round(region_df["core_goals"].mean(),2),
+        "avg_saves": round(region_df["core_saves"].mean(),2),
+        "avg_shoot_percentage": round(region_df["core_shooting_percentage"].mean(),2),
+        "avg_shots": round(region_df["core_shots"].mean(),2) 
+        }
+   
+    return jsonify(region_dict)
 
 if __name__ == "__main__":
     app.run(debug=True)
