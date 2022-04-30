@@ -1,7 +1,68 @@
+//var region = "Oceania"
+//var player_id = "5f3d8fdd95f40596eae2412e"
+//Pull through the region data
+url = "https://project2-cheng-musah-dion.herokuapp.com/api/v1.0/raw_players"
+
+/*var region = (
+d3.json(url).then((data) => {
+    var region = data.team_region;
+    console.log(region)
+}))
+
+//Pull through the player ID data
+var player_id = (
+d3.json(url).then((data) => {
+    var player = data.player_id;
+    console.log(player)
+})) */
 //run SelectID on selecting option from dropdown 
-d3.selectAll("#selDataset").on("change", SelectID);
+//d3.selectAll("#selDataset").on("change", SelectID);
 //function selecting value from drop down and running all other functions
-url = "https://project2-cheng-musah-dion.herokuapp.com/api/v1.0/raw_main"
+
+    url1 = `https://project2-cheng-musah-dion.herokuapp.com/api/v1.0/Oceania/${player_id}`
+    //url2 = "https://project2-cheng-musah-dion.herokuapp.com//api/v1.0/<region>"
+    
+    d3.json(url1).then((data1) => {
+        console.log(data1)
+    })
+/*
+
+//Pull through individual player data based on thier region and player ID
+d3.json(url1).then((data1) => {
+    console.log(data1)
+})
+
+//d3.json(url2).then((data2) => {
+//    console.log(data2)
+//})
+
+thisdict =  {
+    "player_id": 1,
+    "player_tag": 2,
+    "region": 3,
+    "win%": 4,
+    "wins": [5],
+    "color": [6],
+    "avg_score": 7,
+    "score": [8],
+    "avg_assists": 9,
+    "assists": [10],
+    "avg_goals": 11,
+    "goals": [12],
+    "avg_saves": 13,
+    "saves": [14],
+    "avg_shoot_percentage": 15,
+    "shoot_percentage": [16],
+    "avg_shots": 17,
+    "shots": [18],
+}
+ console.log(thisdict);
+
+
+
+ //console.log(data2.core_goals)
+
+*/
 function SelectID() {
     d3.json(url).then((data) => {
         //console.log(data);
@@ -15,6 +76,37 @@ function SelectID() {
         //gauge(stored_id)
     });
 }
+
+// total goals per player
+
+//Linking to HTML Buttons
+var button = d3.select("#filter-btn");
+
+// Trace1 for the Data
+var trace1 = {
+        x: player_id,
+        y: goals,
+        text: player_tag,
+        type: "bar",
+        orientation: "h"
+    };
+        
+    // data
+    var plot = [trace1];
+        
+    // Apply the group bar mode to the layout
+    var layout = {
+        margin: {
+        l: 75,
+        r: 100,
+        t: 0,
+        b: 100
+        }
+    };
+        
+// Render the plot to the div tag with id "bar"
+Plotly.newPlot("bar", plot, layout);
+
 /*
 //Demographic function to input demographic data into info box
 function demographics(selection) {
@@ -149,9 +241,10 @@ function gauge(selection) {
 }
 */
 //Function to load all data and populate dropdown on startup
+var player_id =(
 function init() {
     d3.json(url).then((data) => {
-        console.log(data);
+        //console.log(data);
         //console.log(data.team_name);
         var dropper = d3.selectAll("#selDataset");
         var drop_id = dropper.selectAll('option')
@@ -159,11 +252,13 @@ function init() {
             .enter()
             .append("option")
             .attr('value', d => d)
-            .text( d => `ID: ${d}`)
+            .text( d => `player_id: ${d}`)
         console.log(drop_id);
         SelectID()
     });
 }
+)
+
 //run init function
 init()
 
