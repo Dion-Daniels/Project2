@@ -166,7 +166,7 @@ def region_select(region):
 def player_select_tag(region,player_tag):
     
     stmt = session.query(players).\
-            filter((players.team_region ==region)&(players.player_id ==player_tag)).statement
+            filter((players.team_region ==region)&(players.player_tag == player_tag)).statement
     df3 = pd.read_sql_query(stmt, session.bind).dropna()
     thisdict ={
         "player_id": df3["player_id"].drop_duplicates()[0],
