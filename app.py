@@ -62,7 +62,46 @@ def home():
           "<p>/api/v1.0/IDs</p>"
           "<p>/api/v1.0/region/player_id</p>"
           "<p>/api/v1.0/region/player_tag</p>"          
-          "<p>/api/v1.0/region</p>") 
+          "<p>/api/v1.0/region</p>"
+          "<hr>"
+          "<p>player_tag Json file</p>"
+                  '"player_tag": \
+        <br>"player_id": \
+        <br>"region": \
+        <br>"color": \
+        <br>"game_id": \
+        <br>"wins_loses":  \
+        <br>"games": \
+        <p style="margin-left:50px; margin-top:-5px;">{ "total" : </p>\
+        <p style="margin-left:50px; margin-top:-15px;">"total_orange" : </p>\
+        <p style="margin-left:50px; margin-top:-15px;">"total_blue" : </p>\
+        <p style="margin-left:50px; margin-top:-15px;">}</p>\
+        "wins":  \
+        <p style="margin-left:50px; margin-top:-5px;">{"total_wins": </p>\
+        <p style="margin-left:50px; margin-top:-15px;">"total_wins_orange": </p>\
+        <p style="margin-left:50px; margin-top:-15px;">"total_wins_blue": </p>\
+        <p style="margin-left:50px; margin-top:-15px;">},</p>\
+        "loses":  \
+        <p style="margin-left:50px; margin-top:-5px;"> {"total_loses": </p>\
+        <p style="margin-left:50px; margin-top:-15px;">"total_loses_orange": </p>\
+        <p style="margin-left:50px; margin-top:-15px;">"total_loses_blue": </p>\
+        <p style="margin-left:50px; margin-top:-15px;">}</p>\
+        "win_percent": \
+        <br>"lose_percent": \
+        <br>"avg_score": \
+        <br>"score": \
+        <br>"avg_assists": \
+        <br>"assists": \
+        <br>"avg_goals": \
+        <br>"goals": \
+        <br>"avg_saves": \
+        <br>"saves": \
+        <br>"avg_shoot_percentage": \
+        <br>"shoot_percentage": \
+        <br>"avg_shots": \
+        <br>"shots": \
+            '
+          ) 
 
 # page for last 12 months of percipitation data
 @app.route('/api/v1.0/raw_main')
@@ -119,9 +158,18 @@ def player_select_tag(region,player_tag):
         "color": tag_df["color"].tolist(),
         "game_id": tag_df["game_id"].tolist(),
         "wins_loses":  tag_df["winner"].tolist(),
-        "games": float(tag_df["winner"].count()),
-        "wins":  float(tag_df["winner"][tag_df["winner"]=="True"].count()),
-        "loses": float(tag_df["winner"][tag_df["winner"]=="False"].count()),
+        "games": { "total" : float(tag_df["winner"].count()),
+                    "total_orange" : float(tag_df["winner"][tag_df["color"]=="orange"].count()),
+                    "total_blue" : float(tag_df["winner"][tag_df["color"]=="blue"].count())
+                    },
+        "wins":  {"total_wins": float(tag_df["winner"][tag_df["winner"]=="True"].count()),
+                "total_wins_orange": float(tag_df["winner"][(tag_df["winner"]=="True")&(tag_df["color"]=="orange")].count()),
+                "total_wins_blue": float(tag_df["winner"][(tag_df["winner"]=="True")&(tag_df["color"]=="blue")].count()),
+                    },
+        "loses":  {"total_loses": float(tag_df["winner"][tag_df["winner"]=="False"].count()),
+                "total_loses_orange": float(tag_df["winner"][(tag_df["winner"]=="False")&(tag_df["color"]=="orange")].count()),
+                "total_loses_blue": float(tag_df["winner"][(tag_df["winner"]=="False")&(tag_df["color"]=="blue")].count()),
+                    },
         "win_percent": round(tag_df["winner"][tag_df["winner"]=="True"].count()/ tag_df["winner"].count()*100,2),
         "lose_percent": round(tag_df["winner"][tag_df["winner"]=="False"].count()/ tag_df["winner"].count()*100,2),
         "avg_score": round(tag_df["core_score"].mean(),2),
