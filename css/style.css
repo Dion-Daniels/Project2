@@ -15,22 +15,37 @@ body {
 }
 
 #footer {
-  position: absolute;
-  bottom: 0;
+  position: relative;
   width: 100%; /* Set the fixed height of the footer here */
-  height: 10px;
-  padding-top: 20px;
+  padding-top: 100px;
   padding-bottom: 40px;
   text-align: center;
-  background-color: #f5f5f5;
 }
 
 #footer p {
   margin: 0;
   font-size: 16px;
+
 }
 
 #canvas-basic {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.canvas-interactive-wrapper {
+  position: relative;
+  height: 100%;
+  text-align: center;
+}
+
+.canvas-interactive-wrapper canvas {
   position: absolute;
   display: block;
   width: 100%;
@@ -39,4 +54,24 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+.canvas-interactive-wrapper .cta-wrapper {
+  margin-top: -5px;
+}
+
+.canvas-interactive-wrapper .cta-wrapper a {
+  position: relative;
+  display: inline-block;
+  padding: 3px 7px;
+  border: solid 1px transparent;
+  margin-right: 50px;
+  z-index: 1;
+  text-decoration: none;
+  color: #222;
+  transition: border .3s;
+}
+
+.canvas-interactive-wrapper .cta-wrapper a.active {
+  border-color: #222;
 }

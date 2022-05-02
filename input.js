@@ -1,3 +1,21 @@
+
+var granimInstance = new Granim({
+    element: '#canvas-interactive',
+    name: 'interactive-gradient',
+    elToSetClassOn: '.canvas-interactive-wrapper',
+    direction: 'diagonal',
+    isPausedWhenNotInView: true,
+    stateTransitionSpeed: 500,
+    states : {
+        "default-state": {
+            gradients: [
+                ['#F9D423', '#ff6633'],
+                ['#1A2980', '#26D0CE']
+            ],
+            transitionSpeed: 4000
+        },
+    }
+});
 //var region = "Oceania"
 //var player_id = "5f3d8fdd95f40596eae2412e"
 //Pull through the region data

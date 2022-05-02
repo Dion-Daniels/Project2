@@ -86,6 +86,10 @@ def home():
         <p style="margin-left:50px; margin-top:-15px;">"total_loses_orange": </p>\
         <p style="margin-left:50px; margin-top:-15px;">"total_loses_blue": </p>\
         <p style="margin-left:50px; margin-top:-15px;">}</p>\
+        "goals_as":  \
+        <p style="margin-left:50px; margin-top:-5px;"> {"goals_as_orange": </p>\
+        <p style="margin-left:50px; margin-top:-15px;">"goals_as_blue": </p>\
+        <p style="margin-left:50px; margin-top:-15px;">}</p>\
         "win_percent": \
         <br>"lose_percent": \
         <br>"avg_score": \
@@ -178,6 +182,9 @@ def player_select_tag(region,player_tag):
         "assists": tag_df["core_assists"].tolist(),
         "avg_goals": round(tag_df["core_goals"].mean(),2),
         "goals": tag_df["core_goals"].tolist(),
+        "goals_as": {"goals_as_orange": float(tag_df["core_goals"][tag_df["color"]=="orange"].sum()),
+                    "goals_as_blue":    float(tag_df["core_goals"][tag_df["color"]=="blue"].sum())
+                    },
         "avg_saves": round(tag_df["core_saves"].mean(),2),
         "saves": tag_df["core_saves"].tolist(),
         "avg_shoot_percentage": round(tag_df["core_shooting_percentage"].mean(),2),
