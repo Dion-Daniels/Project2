@@ -82,55 +82,55 @@ for (var i = 0; i < 1; i++) {
     Plotly.newPlot("pie", stats2, layout2);
 
 //build line chart goals/assists/saves over games
-    var trace3 = {
-        x: data.game_id,
-        y: data.goals,
-        type: 'scatter',
-        name: "Goals"
-    };
+var trace3 = {
+    x: data.game_id,
+    y: data.goals,
+    type: 'scatter',
+    name: "Goals"
+};
 
-    var trace4 = {
-        x: data.game_id,
-        y: data.assists,
-        type: 'scatter',
-        name: "Assists"
-    };
+var trace4 = {
+    x: data.game_id,
+    y: data.assists,
+    type: 'scatter',
+    name: "Assists"
+};
 
-    var trace5 = {
-        x: data.game_id,
-        y: data.saves,
-        type: 'scatter',
-        name: "Saves"
-    };
+var trace5 = {
+    x: data.game_id,
+    y: data.saves,
+    type: 'scatter',
+    name: "Saves"
+}
+var trace6 = {
+    x: data.game_id,
+    y: data.score,
+    name: 'yaxis2 data',
 
-    var trace6 = {
-        x: data.game_id,
-        y: data.score,
-        type: 'scatter',
-        name: "Score",
-        yaxis: "Total Score"
-    };
+    yaxis: 'y2',
+    type: 'scatter',
+    name: "Score"
+}
 
-    var allstats = [trace3, trace4, trace5, trace6];
+var allstats = [trace3, trace4, trace5, trace6 ];
 
-    var layout3 = {
-        title: "Goals, Assists and Saves Each Game",
-        xaxis: { Title:"Games",
-        showticklabels: false},
-        labels:{},
-        yaxis: {title:"Goals/Assits/Saves"},
-        yaxis2: {
-            title:"Total Score",
-            overlaying: "y", 
-            side: "right"
-        }
-    }
-    var graphOptions = {layout: layout3, filename: "multiple-axes-double", 
-    fileopt: "overwrite"};
+var layout3 = {
+    title: "Goals, Assists and Saves each Game",
+    xaxis: { Title:"Games",
+    showticklabels: false},
+    yaxis: {title: 'yaxis title'},
+    yaxis2: {
+        title: 'yaxis2 title',
+        titlefont: {color: 'rgb(148, 103, 189)'},
+        tickfont: {color: 'rgb(148, 103, 189)'},
+        overlaying: 'y',side: 'right'
 
-    Plotly.newPlot("scatter", allstats, graphOptions)
+},
+    labels:{}
+}
+
+Plotly.newPlot("scatter", allstats, layout3)
     });
-
 }
 
 function init() {
