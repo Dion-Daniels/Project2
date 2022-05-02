@@ -49,14 +49,11 @@ for (var i = 0; i < 1; i++) {
   trow.append("td")
 }
 
-
-
-
 //build bar chart goals by player colour
     var trace1 = {
         x: data.color,
         y: data.goals,
-        type: "bar"
+        type: "bar",
         };
           
           var stats = [trace1];
@@ -104,19 +101,34 @@ for (var i = 0; i < 1; i++) {
         y: data.saves,
         type: 'scatter',
         name: "Saves"
-    }
+    };
 
-    var allstats = [trace3, trace4, trace5];
+    var trace6 = {
+        x: data.game_id,
+        y: data.score,
+        type: 'scatter',
+        name: "Score",
+        yaxis: "Total Score"
+    };
+
+    var allstats = [trace3, trace4, trace5, trace6];
 
     var layout3 = {
-        title: "Goals, Assists and Saves each Game",
+        title: "Goals, Assists and Saves Each Game",
         xaxis: { Title:"Games",
         showticklabels: false},
-        labels:{}
+        labels:{},
+        yaxis: {title:"Goals/Assits/Saves"},
+        yaxis2: {
+            title:"Total Score",
+            overlaying: "y", 
+            side: "right"
+        }
     }
+    var graphOptions = {layout: layout3, filename: "multiple-axes-double", 
+    fileopt: "overwrite"};
 
-    Plotly.newPlot("scatter", allstats, layout3)
-
+    Plotly.newPlot("scatter", allstats, graphOptions)
     });
 
 }
@@ -141,3 +153,11 @@ function init() {
 //run init function
 init()
 
+var button = d3.select("#reset_button");
+button.on("click",runReset);
+
+function runReset () {
+    console.log("works")
+    d3.event.preventDefault();
+    d3.select("#table_body").selectAll("tr:not(:last-child)").remove();
+}
