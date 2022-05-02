@@ -30,6 +30,28 @@ function demographics(selection) {
     var total_goals = (data => data.goals.reduce((a,b) => a + b),0)
     console.log(total_goals)
 
+//build stats table
+
+var table = d3.select("#summary-table");
+var tbody = table.select("tbody");
+var trow;
+for (var i = 0; i < 1; i++) {
+  trow = tbody.append("tr");
+  trow.append("td").text(data.player_tag);
+  trow.append("td").text(data.games.total);
+  trow.append("td").text((data.win_percent)+"%");
+  trow.append("td").text(data.wins.total_wins);
+  trow.append("td").text(data.loses.total_loses);
+  trow.append("td").text(data.avg_goals);
+  trow.append("td").text(data.avg_assists);
+  trow.append("td").text(data.avg_saves);
+  trow.append("td").text(data.avg_score);
+  trow.append("td")
+}
+
+
+
+
 //build bar chart goals by player colour
     var trace1 = {
         x: data.color,
@@ -50,7 +72,7 @@ function demographics(selection) {
 // Pie Chart - Wins/Losses
     var trace2 = {
         labels: ["Wins","Loses"],
-        values: [data.wins, data.loses],
+        values: [data.wins.total_wins, data.loses.total_loses],
         type: 'pie'
     };
 
@@ -61,35 +83,42 @@ function demographics(selection) {
         };
 
     Plotly.newPlot("pie", stats2, layout2);
+
+//build line chart goals/assists/saves over games
+    var trace3 = {
+        x: data.game_id,
+        y: data.goals,
+        type: 'scatter',
+        name: "Goals"
+    };
+
+    var trace4 = {
+        x: data.game_id,
+        y: data.assists,
+        type: 'scatter',
+        name: "Assists"
+    };
+
+    var trace5 = {
+        x: data.game_id,
+        y: data.saves,
+        type: 'scatter',
+        name: "Saves"
+    }
+
+    var allstats = [trace3, trace4, trace5];
+
+    var layout3 = {
+        title: "Goals, Assists and Saves each Game",
+        xaxis: { Title:"Games",
+        showticklabels: false},
+        labels:{}
+    }
+
+    Plotly.newPlot("scatter", allstats, layout3)
+
     });
 
-
-
-function buildTable(games, Win_percent, wins, loses, avg_goals, avg_assists, 
-    avg_saves, avg_score) {
-    var table = d3.select("#summary-table");
-    var tbody = table.select("tbody");
-    var games = data.games;
-    var Win_percent = data.Win_percent;
-    var wins = data.wins;
-    var loses = data.loses;
-    var avg_goals = data.avg_goals;
-    var avg_assists = data.avg_assists;
-    var avg_saves = data.avg_saves;
-    var avg_score = data.avg_score;
-    var trow;
-    for (var i = 0; i< 12; i++) {
-        trow = tbody.append("tr");
-        trow.append("td").text(games);
-        trow.append("td").text(Win_percent);
-        trow.append("td").text(wins);
-        trow.append("td").text(loses);
-        trow.append("td").text(avg_goals);
-        trow.append("td").text(avg_assists);
-        trow.append("td").text(avg_saves);
-        trow.append("td").text(avg_score);
-    }
-}
 }
 
 function init() {
