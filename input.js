@@ -136,9 +136,9 @@ var layout3 = {
     title: "Goals, Assists and Saves each Game",
     xaxis: { Title:"Games",
     showticklabels: false},
-    yaxis: {title: 'yaxis title'},
+    yaxis: {title: 'Goals, Assists, or Saves'},
     yaxis2: {
-        title: 'yaxis2 title',
+        title: 'Score',
         titlefont: {color: 'rgb(148, 103, 189)'},
         tickfont: {color: 'rgb(148, 103, 189)'},
         overlaying: 'y',side: 'right'
