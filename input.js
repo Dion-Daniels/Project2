@@ -69,8 +69,8 @@ for (var i = 0; i < 1; i++) {
 
 //build bar chart goals by player colour
     var trace1 = {
-        x: data.color,
-        y: data.goals,
+        x: ["Orange", "Blue"],
+        y: [data.goals_as.goals_as_orange, data.goals_as.goals_as_blue],
         type: "bar",
         };
           
