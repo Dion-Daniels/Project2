@@ -2,7 +2,7 @@ Brotli==1.0.9
 certifi==2021.10.8
 click==8.1.2
 colorama==0.4.4
-Flask==2.1.1
+Flask==2.1.0
 Flask-Compress==1.11
 Flask-Cors==3.0.10
 Flask-SQLAlchemy==2.5.1
