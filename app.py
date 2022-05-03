@@ -10,7 +10,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, inspect
 from flask_cors import CORS
 from flask_compress import Compress
-from flask import Flask, render_template
+from flask import render_template
 
 #create engine and classes
 engine = create_engine("sqlite:///RocketLeague.db")
@@ -26,18 +26,6 @@ main = Base.classes.main_clean
 
 session = Session(engine)
 
-
-#create variables for most recent recording date, date 12 months prior, and station with most recordings
-#latest_recording = (session.query(Measurement.date).order_by(Measurement.date.desc()).first()).date
-#last_12m_iso = date.fromisoformat(latest_recording)- relativedelta(years=1)
-#last_12m = date.isoformat(last_12m_iso)
-
-#top_station = (session.query(func.count(Measurement.date),Measurement.station).\
-#    group_by(Measurement.station).\
-#    order_by(func.count(Measurement.date).desc()).first()).station
-
-
-
 #################################################
 # Flask Setup
 #################################################
@@ -50,10 +38,10 @@ CORS(app)
 # Flask Routes
 #################################################
 
-#Home page with route ids
-@app.route("/")
+#Home page 
+@app.route('/')
 def home():
-    return(render_template('index.html'))
+   return render_template('index.html')
 
 @app.route("/api")
 def api():
