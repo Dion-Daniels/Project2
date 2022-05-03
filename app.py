@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, inspect
 from flask_cors import CORS
 from flask_compress import Compress
+from flask import Flask, render_template
 
 #create engine and classes
 engine = create_engine("sqlite:///RocketLeague.db")
@@ -52,6 +53,10 @@ CORS(app)
 #Home page with route ids
 @app.route("/")
 def home():
+    return(render_template('index.html'))
+
+@app.route("/api")
+def api():
     print("Server received request for 'Home' page...")
     return(f"<h1>Project 2 - Rocket League</h1><hr>"
           "<p>by Cheng, Musah, and Dion</p>"
